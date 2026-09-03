@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'emergency_contacts.dart';
+import 'bluetooth_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,7 +16,6 @@ class HomeScreen extends StatelessWidget {
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
 
               const Text(
@@ -45,9 +46,10 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
 
+                    // TOP ROW
                     Expanded(
                       child: Row(
-                        children: const [
+                        children: [
 
                           Expanded(
                             child: DashboardCard(
@@ -55,12 +57,21 @@ class HomeScreen extends StatelessWidget {
                               title: "Bluetooth Connection",
                               subtitle:
                                   "Check your helmet Bluetooth connectivity",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BluetoothScreen(),
+                                  ),
+                                );
+                              },
                             ),
                           ),
 
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
 
-                          Expanded(
+                          const Expanded(
                             child: DashboardCard(
                               icon: Icons.local_bar,
                               title: "Alcohol Level",
@@ -72,13 +83,14 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
+                    // BOTTOM ROW
                     Expanded(
                       child: Row(
-                        children: const [
+                        children: [
 
-                          Expanded(
+                          const Expanded(
                             child: DashboardCard(
                               icon: Icons.visibility,
                               title: "Fatigue Level",
@@ -87,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
 
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
 
                           Expanded(
                             child: DashboardCard(
@@ -95,6 +107,15 @@ class HomeScreen extends StatelessWidget {
                               title: "Emergency Contacts",
                               subtitle:
                                   "Manage your emergency contacts",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EmergencyContactsScreen(),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -115,60 +136,66 @@ class DashboardCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   const DashboardCard({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
 
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
-        borderRadius: BorderRadius.circular(20),
-      ),
+      child: Container(
+        padding: const EdgeInsets.all(12),
 
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E1E1E),
+          borderRadius: BorderRadius.circular(20),
+        ),
 
-        children: [
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          Icon(
-            icon,
-            size: 30,
-            color: Colors.orange,
-          ),
-
-          const SizedBox(height: 10),
-
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+            Icon(
+              icon,
+              size: 30,
+              color: Colors.orange,
             ),
-          ),
 
-          const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 11,
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 8),
+
+            Text(
+              subtitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

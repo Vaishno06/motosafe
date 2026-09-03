@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
               size: 100,
               color: Colors.orange,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20),  
             Text(
               'MotoSafe',
               style: TextStyle(
